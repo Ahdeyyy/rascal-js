@@ -1,8 +1,8 @@
 module Parser
 
-import Data;
-import Syntax;
+import AbstractSyntax;
+import ConcreteSyntax;
 import ParseTree;
 
-Data::Expression load(Tree t) = implode(#Data::Expression,t);
-Tree parseExp(str txt) = parse(#Syntax::Expression, txt);
+AbstractSyntax::Expression load(Tree t) = implode(#AbstractSyntax::Expression,t);
+Tree parseExp(str txt) = parse(#ConcreteSyntax::Expression, txt);
