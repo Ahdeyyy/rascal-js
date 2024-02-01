@@ -7,7 +7,10 @@ lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
 // syntax Function = \function : "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}";
 
 start syntax Expression 
-    = right let: "let" Identifier "=" Expression ";"
+    = right let: "let" Identifier "=" Expression  ";"
+    | right let: "let" Identifier "=" Expression
+    | right \const: "const" Identifier "=" Expression
+    | right \const: "const" Identifier "=" Expression ";"
     | condition: "if" "(" Expression ")" "{" Expression "}" "else" "{" Expression "}"
     | bracket "(" Expression ")"
     | variable: Identifier
@@ -15,6 +18,7 @@ start syntax Expression
     | string: String
     | \return: "return" Expression ";"
     | \function: "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}"
+    | arrowFunction: "(" { Identifier ","}* ")" "=" "\>" "{" Expression "}"
     > non-assoc (
         left mul: Expression "*" Expression
       | non-assoc div: Expression "/" Expression
@@ -33,6 +37,7 @@ start syntax Expression
     > right sequence: Expression ";" Expression
 
 ;
+
 
 layout Whitespace
     = [\ \t\n]*;

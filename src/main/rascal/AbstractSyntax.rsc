@@ -6,12 +6,14 @@ extend ConcreteSyntax;
 
 data Expression
     = let(str LeftHandSide, Expression RightHandSide)
+    | \const(str LeftHandSide, Expression RightHandSide)
     | condition(Expression condition, Expression then, Expression \else)
     | variable(str name)
     | literal(int literal)
     | string(str string)
     | \return(Expression expression)
     | \function(str functionName, list[str] functionArguments, Expression FunctionBody)
+    | arrowFunction(list[str] arrowFunctionArguments, Expression arrowFunctionBody)
     | mul(Expression lhs, Expression rhs)
     | div(Expression lhs, Expression rhs)
     | add(Expression lhs, Expression rhs)
