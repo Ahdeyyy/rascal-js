@@ -19,6 +19,7 @@ start syntax Expression
     | \return: "return" Expression ";"
     | \function: "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}"
     | arrowFunction: "(" { Identifier ","}* ")" "=" "\>" "{" Expression "}"
+    | \for: "for" "(" Expression ";" Expression ";" Expression ")" "{" Expression "}"
     > non-assoc (
         left mul: Expression "*" Expression
       | non-assoc div: Expression "/" Expression
@@ -38,6 +39,45 @@ start syntax Expression
 
 ;
 
+
+keyword Keywords
+    = "let"
+    | "const"
+    | "if"
+    | "else"
+    | "return"
+    | "function"
+    | "switch"
+    | "case"
+    | "default"
+    | "break"
+    | "continue"
+    | "for"
+    | "while"
+    | "do"
+    | "in"
+    | "of"
+    | "true"
+    | "false"
+    | "null"
+    | "undefined"
+    | "import"
+    | "export"
+    | "from"
+    | "as"
+    | "try"
+    | "catch"
+    | "finally"
+    | "throw"
+    | "new"
+    | "class"
+    | "extends"
+    | "super"
+    | "this"
+    | "typeof"
+    | "instanceof"
+
+    ;
 
 layout Whitespace
     = [\ \t\n]*;

@@ -14,6 +14,7 @@ data Expression
     | \return(Expression expression)
     | \function(str functionName, list[str] functionArguments, Expression FunctionBody)
     | arrowFunction(list[str] arrowFunctionArguments, Expression arrowFunctionBody)
+    | \for(Expression forInitializer, Expression forCondition, Expression forIncrement, Expression forBody)
     | mul(Expression lhs, Expression rhs)
     | div(Expression lhs, Expression rhs)
     | add(Expression lhs, Expression rhs)
@@ -24,6 +25,8 @@ data Expression
     | leq(Expression lhs, Expression rhs)
     | sequence(Expression first, Expression second)
     ;
+
+
 
 
 data Binding = binding(str variable, Expression expression);
