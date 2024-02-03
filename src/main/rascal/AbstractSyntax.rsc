@@ -5,17 +5,22 @@ extend ConcreteSyntax;
 // data \function = \function(str functionName, list[str] functionArguments, Expression FunctionBody);
 
 data Expression
-    = let(str LeftHandSide, Expression RightHandSide)
-    | \const(str LeftHandSide, Expression RightHandSide)
+    = let(Expression lhs, Expression rhs)
+    | \const(Expression lhs, Expression rhs)
     | condition(Expression condition, Expression then, Expression \else)
     | blockExpression(Expression blockBody)
     | variable(str name)
     | literal(int literal)
     | string(str string)
     | \return(Expression expression)
-    | \function(str functionName, list[str] functionArguments, Expression FunctionBody)
-    | arrowFunction(list[str] arrowFunctionArguments, Expression arrowFunctionBody)
+    | \function(Expression functionName, list[Expression] functionArguments, Expression FunctionBody)
+    | \function(list[Expression] functionArguments, Expression FunctionBody)
+    | arrowFunction(list[Expression] arrowFunctionArguments, Expression arrowFunctionBody)
     | \for(Expression forInitializer, Expression forCondition, Expression forIncrement, Expression forBody)
+    | \while(Expression whileCondition, Expression whileBody)
+    | \do(Expression doBody, Expression doCondition)
+    | \forIn(Expression forInVariable, Expression forInObject, Expression forInBody)
+    | \forOf(Expression forOfVariable, Expression forOfObject, Expression forOfBody)
     | mul(Expression lhs, Expression rhs)
     | div(Expression lhs, Expression rhs)
     | add(Expression lhs, Expression rhs)
@@ -39,7 +44,7 @@ data Expression
     | sequence(Expression first, Expression second)
     | increment(Expression expression)
     | decrement(Expression expression)
-    | call(Expression function, list[Expression] arguments) // Todo
+    | call(Expression function, list[Expression] arguments) 
 
     ;
 

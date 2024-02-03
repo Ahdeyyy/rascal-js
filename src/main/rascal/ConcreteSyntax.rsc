@@ -2,28 +2,33 @@ module ConcreteSyntax
 
 lexical IntegerLiteral = [0-9]+ !>> [0-9];
 lexical Identifier = [a-zA-Z][a-zA-Z0-9]* !>> [a-zA-Z0-9];
-lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'"; 
+lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
+
 
 // syntax Function = \function : "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}";
 
 
 
 start syntax Expression 
-    = right let: "let" Identifier "=" Expression  ";"
-    | right let: "let" Identifier "=" Expression
-    | right \const: "const" Identifier "=" Expression
-    | right \const: "const" Identifier "=" Expression ";"
+  = 
+    right let: "let" Expression "=" Expression  ";"
+  | right let: "let" Expression "=" Expression
+  | right \const: "const" Expression "=" Expression
+  | right \const: "const" Expression "=" Expression ";"
+  
     | condition: "if" "(" Expression ")" "{" Expression "}" "else" "{" Expression "}"
     | bracket "(" Expression ")"
     | variable: Identifier
     | literal: IntegerLiteral
     | string: String
     | \return: "return" Expression ";"
-    | \function: "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}"
-    | arrowFunction: "(" { Identifier ","}* ")" "=" "\>" "{" Expression "}"
+    | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
+    | \function: "function" "(" { Expression "," }* ")" "{" Expression "}"
+    | call: Expression "(" { Expression "," }* ")"
+    | arrowFunction: "(" { Expression ","}* ")" "=" "\>" "{" Expression "}"
     | \for: "for" "(" Expression ";" Expression ";" Expression ")" "{" Expression "}"
-    | \forIn: "for" "(" Identifier "in" Expression ")" "{" Expression "}"
-    | \forOf: "for" "(" Identifier "of" Expression ")" "{" Expression "}"
+    | \forIn: "for" "(" Expression "in" Expression ")" "{" Expression "}"
+    | \forOf: "for" "(" Expression "of" Expression ")" "{" Expression "}"
     | \while: "while" "(" Expression ")" "{" Expression "}"
     | \doWhile: "do" "{" Expression "}" "while" "(" Expression ")" ";"
     | blockExpression: "{" Expression "}"
