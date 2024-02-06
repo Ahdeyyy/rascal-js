@@ -17,7 +17,7 @@ int main(int testArgument=0) {
     // str example3 = "let foo = \"bar\"; function baz(str) { console.log(str); }; baz(foo);";
     // str example5 = "let foo = \'bar\';";
     // str example5 = "const add = (x, y) =\> { return x+y;}";
-    str example5 = "let foo = [3,2,1];";
+    str example5 = "console.log(foo[3])";
     // println(example5);
     // str example5 = "let foo = 1 + 1;";
     tree = Parser::parseExp(example5);

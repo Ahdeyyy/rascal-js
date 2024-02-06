@@ -4,16 +4,22 @@ extend ConcreteSyntax;
 
 // data \function = \function(str functionName, list[str] functionArguments, Expression FunctionBody);
 
+data KeyValuePairs = keyValue(Expression name, Expression val);
+
 data Expression
     = let(Expression lhs, Expression rhs)
     | \const(Expression lhs, Expression rhs)
+    // | this()
+    // | empty()
     | condition(Expression condition, Expression then, Expression \else)
     | blockExpression(Expression blockBody)
     | variable(str name)
     | literal(int literal)
     | string(str string)
     | \list(list[Expression] items)
-    | memberAccess(Expression variable, Expression member)
+    | object(list[KeyValuePairs] pairs)
+    | property(Expression variable, Expression prop)
+    | member(Expression variable, Expression mem)
     | \return(Expression expression)
     | \function(Expression functionName, list[Expression] functionArguments, Expression FunctionBody)
     | \function(list[Expression] functionArguments, Expression FunctionBody)

@@ -7,27 +7,31 @@ lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
 
 // syntax Function = \function : "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}";
 
-
+syntax KeyValuePairs = keyValue : Expression ":" Expression;
 
 start syntax Expression 
   = 
-    right let: "let" Expression "=" Expression  ";"
-   |right let: "let" Expression "=" Expression
-  | right \const: "const" Expression "=" Expression
-  | right \const: "const" Expression "=" Expression ";"
-  
+      right let: "let" Expression "=" Expression  ";"
+    | right let: "let" Expression "=" Expression
+    | right \const: "const" Expression "=" Expression
+    | right \const: "const" Expression "=" Expression ";"
+    // | empty: ";"
+    // | this: "this" 
     | condition: "if" "(" Expression ")" "{" Expression "}" "else" "{" Expression "}"
     | bracket "(" Expression ")"
     | variable: Identifier
     | literal: IntegerLiteral
     | string: String
     | \return: "return" Expression ";"
-    > left memberAccess: Expression "." Expression
-    > left memberAccess: Expression "." Expression ";"
+    > left property: Expression "." Expression
+    > left property: Expression "." Expression ";"
+    > left member: Expression "[" Expression "]"
+    > left member: Expression "[" Expression "]" ";"
     | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
     | \function: "function" "(" { Expression "," }* ")" "{" Expression "}"
     | call: Expression "(" { Expression "," }* ")"
     | \list: "[" { Expression ","}* "]"
+    | object: "{" { KeyValuePairs ","}* "}"
     | arrowFunction: "(" { Expression ","}* ")" "=" "\>" "{" Expression "}"
     | \for: "for" "(" Expression ";" Expression ";" Expression ")" "{" Expression "}"
     | \forIn: "for" "(" Expression "in" Expression ")" "{" Expression "}"
