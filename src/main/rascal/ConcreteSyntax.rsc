@@ -12,7 +12,7 @@ lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
 start syntax Expression 
   = 
     right let: "let" Expression "=" Expression  ";"
-  | right let: "let" Expression "=" Expression
+   |right let: "let" Expression "=" Expression
   | right \const: "const" Expression "=" Expression
   | right \const: "const" Expression "=" Expression ";"
   
@@ -22,15 +22,18 @@ start syntax Expression
     | literal: IntegerLiteral
     | string: String
     | \return: "return" Expression ";"
+    > left memberAccess: Expression "." Expression
+    > left memberAccess: Expression "." Expression ";"
     | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
     | \function: "function" "(" { Expression "," }* ")" "{" Expression "}"
     | call: Expression "(" { Expression "," }* ")"
+    | \list: "[" { Expression ","}* "]"
     | arrowFunction: "(" { Expression ","}* ")" "=" "\>" "{" Expression "}"
     | \for: "for" "(" Expression ";" Expression ";" Expression ")" "{" Expression "}"
     | \forIn: "for" "(" Expression "in" Expression ")" "{" Expression "}"
     | \forOf: "for" "(" Expression "of" Expression ")" "{" Expression "}"
     | \while: "while" "(" Expression ")" "{" Expression "}"
-    | \doWhile: "do" "{" Expression "}" "while" "(" Expression ")" ";"
+    | doWhile: "do" "{" Expression "}" "while" "(" Expression ")" ";"
     | blockExpression: "{" Expression "}"
     > non-assoc (
         left mul: Expression "*" Expression
