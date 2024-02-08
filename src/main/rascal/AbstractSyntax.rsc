@@ -6,11 +6,17 @@ extend ConcreteSyntax;
 
 data KeyValuePairs = keyValue(Expression name, Expression val);
 
+data SwitchStatement = 
+     switchCase(Expression caseValue, Expression caseBody)
+    | defaultCase(Expression defaultBody)
+;
+
+
+
 data Expression
     = let(Expression lhs, Expression rhs)
     | \const(Expression lhs, Expression rhs)
-    // | this()
-    // | empty()
+    | \switch(Expression switchVariable, list[SwitchStatement] switchCases)
     | condition(Expression condition, Expression then, Expression \else)
     | blockExpression(Expression blockBody)
     | variable(str name)
@@ -21,6 +27,9 @@ data Expression
     | property(Expression variable, Expression prop)
     | member(Expression variable, Expression mem)
     | \return(Expression expression)
+    | tryCatch(Expression tryBlock, Expression exceptionVariable, Expression catchBlock )
+    | tryCatch(Expression tryBlock,  Expression catchBlock )
+
     | \function(Expression functionName, list[Expression] functionArguments, Expression FunctionBody)
     | \function(list[Expression] functionArguments, Expression FunctionBody)
     | arrowFunction(list[Expression] arrowFunctionArguments, Expression arrowFunctionBody)
@@ -53,10 +62,10 @@ data Expression
     | increment(Expression expression)
     | decrement(Expression expression)
     | call(Expression function, list[Expression] arguments) 
-
+    
     ;
 
 
 
 
-data Binding = binding(str variable, Expression expression);
+// data Binding = binding(str variable, Expression expression);

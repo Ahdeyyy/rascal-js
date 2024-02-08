@@ -8,6 +8,11 @@ lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
 // syntax Function = \function : "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}";
 
 syntax KeyValuePairs = keyValue : Expression ":" Expression;
+syntax SwitchStatement = 
+   switchCase: "case" Expression ":" Expression 
+  | defaultCase: "default" ":" Expression
+  ; 
+
 
 start syntax Expression 
   = 
@@ -15,8 +20,6 @@ start syntax Expression
     | right let: "let" Expression "=" Expression
     | right \const: "const" Expression "=" Expression
     | right \const: "const" Expression "=" Expression ";"
-    // | empty: ";"
-    // | this: "this" 
     | condition: "if" "(" Expression ")" "{" Expression "}" "else" "{" Expression "}"
     | bracket "(" Expression ")"
     | variable: Identifier
@@ -29,6 +32,9 @@ start syntax Expression
     > left member: Expression "[" Expression "]" ";"
     | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
     | \function: "function" "(" { Expression "," }* ")" "{" Expression "}"
+    | \switch: "switch" "(" Expression ")" "{" { SwitchStatement "" }* "}"
+    | tryCatch: "try" "{" Expression "}" "catch" Expression "{" Expression "}"
+    | tryCatch: "try" "{" Expression "}" "catch" "("")" "{" Expression "}"
     | call: Expression "(" { Expression "," }* ")"
     | \list: "[" { Expression ","}* "]"
     | object: "{" { KeyValuePairs ","}* "}"
@@ -79,7 +85,7 @@ start syntax Expression
       | left ternary: Expression "?" Expression ":" Expression
       | left not: "!" Expression
     )
-
+  
 ;
 
 
