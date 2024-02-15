@@ -6,10 +6,6 @@ extend ConcreteSyntax;
 
 data KeyValuePairs = keyValue(Expression name, Expression val);
 
-data SwitchStatement = 
-     switchCase(Expression caseValue, Expression caseBody)
-    | defaultCase(Expression defaultBody)
-;
 
 
 
@@ -59,6 +55,7 @@ data Expression
     | modAssign(Expression lhs, Expression rhs)
     
     | sequence(Expression first, Expression second)
+    // | line(Expression expression)
     | increment(Expression expression)
     | decrement(Expression expression)
     | call(Expression function, list[Expression] arguments) 
@@ -66,6 +63,10 @@ data Expression
     ;
 
 
+data SwitchStatement = 
+     switchCase(Expression caseValue, Expression caseBody)
+    | defaultCase(Expression defaultBody)
+;
 
 
 // data Binding = binding(str variable, Expression expression);

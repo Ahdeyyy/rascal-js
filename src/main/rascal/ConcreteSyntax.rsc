@@ -10,7 +10,7 @@ lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
 syntax KeyValuePairs = keyValue : Expression ":" Expression;
 syntax SwitchStatement = 
    switchCase: "case" Expression ":" Expression 
-  | defaultCase: "default" ":" Expression
+  > defaultCase: "default" ":" Expression
   ; 
 
 
@@ -32,7 +32,7 @@ start syntax Expression
     > left member: Expression "[" Expression "]" ";"
     | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
     | \function: "function" "(" { Expression "," }* ")" "{" Expression "}"
-    | \switch: "switch" "(" Expression ")" "{" { SwitchStatement "" }* "}"
+    | \switch: "switch" "(" Expression ")" "{" SwitchStatement* "}"
     | tryCatch: "try" "{" Expression "}" "catch" Expression "{" Expression "}"
     | tryCatch: "try" "{" Expression "}" "catch" "("")" "{" Expression "}"
     | call: Expression "(" { Expression "," }* ")"
@@ -61,10 +61,11 @@ start syntax Expression
 
     )
     > right sequence: Expression ";" Expression
+    // > right line: Expression ";"
     > right increment: Expression "++"
     > right decrement: Expression "--"
     > right (
-        right assign: Expression "=" Expression
+        right assign: Expression "=" Expression ";"
       | right addAssign: Expression "+=" Expression
       | right subAssign: Expression "-=" Expression
       | right mulAssign: Expression "*=" Expression
