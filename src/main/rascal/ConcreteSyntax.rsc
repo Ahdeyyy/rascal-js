@@ -32,7 +32,7 @@ start syntax Expression
     > left member: Expression "[" Expression "]" ";"
     | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
     | \function: "function" "(" { Expression "," }* ")" "{" Expression "}"
-    | \switch: "switch" "(" Expression ")" "{" SwitchStatement* "}"
+    | \switch: "switch" "(" Expression ")" "{" SwitchStatement+ "}"
     | tryCatch: "try" "{" Expression "}" "catch" Expression "{" Expression "}"
     | tryCatch: "try" "{" Expression "}" "catch" "("")" "{" Expression "}"
     | call: Expression "(" { Expression "," }* ")"

@@ -16,7 +16,7 @@ int main(int testArgument=0) {
     // str example2 = "let foo = \"bar\";";
     // str example3 = "let foo = \"bar\"; function baz(str) { console.log(str); }; baz(foo);";
     // str example4 = "let foo = \'bar\';";
-    str example5 = "const add = (x, y) =\> { return x+y;}";
+    str example5 = "switch (foo) { case 2: console.log(foo);  default: return 4; }";
     // str example6 = "try { let foo = 4;} catch() { console.error(e); }";
 
     // println(example5);
