@@ -1,13 +1,6 @@
-module AbstractSyntax
-
-extend ConcreteSyntax;
-
-// data \function = \function(str functionName, list[str] functionArguments, Expression FunctionBody);
+module AbstractSyntax extend ConcreteSyntax;
 
 data KeyValuePairs = keyValue(Expression name, Expression val);
-
-
-
 
 data Expression
     = let(Expression lhs, Expression rhs)
@@ -16,8 +9,12 @@ data Expression
     | condition(Expression condition, Expression then, Expression \else)
     | blockExpression(Expression blockBody)
     | variable(str name)
-    | literal(int literal)
+    | integerLiteral(int integerLiteral)
+    | floatLiteral(real floatLiteral)
     | string(str string)
+    | \import(Expression defaultModule, str importPath)
+    | \import(list[Expression] importModules, str importPath)
+    | \import(Expression defaultModule, list[Expression] importModules, str importPath)
     | \list(list[Expression] items)
     | object(list[KeyValuePairs] pairs)
     | property(Expression variable, Expression prop)

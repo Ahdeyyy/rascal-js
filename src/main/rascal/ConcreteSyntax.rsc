@@ -2,17 +2,15 @@ module ConcreteSyntax
 
 lexical IntegerLiteral = [0-9]+ !>> [0-9];
 lexical Identifier = [a-zA-Z][a-zA-Z0-9]* !>> [a-zA-Z0-9];
+lexical FloatLiteral = [0-9]+[.][0-9]+;
 lexical String =   "\"" ![\"]*  "\"" | "\'" ![\']* "\'";
 
-
-// syntax Function = \function : "function" Identifier "(" { Identifier "," }* ")" "{" Expression "}";
 
 syntax KeyValuePairs = keyValue : Expression ":" Expression;
 syntax SwitchStatement = 
    switchCase: "case" Expression ":" Expression 
   > defaultCase: "default" ":" Expression
   ; 
-
 
 start syntax Expression 
   = 
@@ -23,11 +21,15 @@ start syntax Expression
     | condition: "if" "(" Expression ")" "{" Expression "}" "else" "{" Expression "}"
     | bracket "(" Expression ")"
     | variable: Identifier
-    | literal: IntegerLiteral
+    | integerLiteral: IntegerLiteral
+    >  floatLiteral: FloatLiteral
     | string: String
     | \return: "return" Expression ";"
-    > left property: Expression "." Expression
-    > left property: Expression "." Expression ";"
+    | \import: "import" Expression "from" String ";"
+    | \import: "import" "{" { Expression "," }* "}" "from" String ";"
+    | \import: "import" Expression "," "{" {Expression ","}* "}" "from" String ";"
+    // | left property: Expression "." Expression
+    | left property: Expression "." Expression ";"
     > left member: Expression "[" Expression "]"
     > left member: Expression "[" Expression "]" ";"
     | \function: "function" Expression "(" { Expression "," }* ")" "{" Expression "}"
@@ -36,7 +38,7 @@ start syntax Expression
     | tryCatch: "try" "{" Expression "}" "catch" Expression "{" Expression "}"
     | tryCatch: "try" "{" Expression "}" "catch" "("")" "{" Expression "}"
     | call: Expression "(" { Expression "," }* ")"
-    | \list: "[" { Expression ","}* "]"
+    | \list: "[" { Expression ","?}* "]"
     | object: "{" { KeyValuePairs ","}* "}"
     | arrowFunction: "(" { Expression ","}* ")" "=" "\>" "{" Expression "}"
     | \for: "for" "(" Expression ";" Expression ";" Expression ")" "{" Expression "}"
